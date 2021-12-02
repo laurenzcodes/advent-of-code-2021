@@ -5,7 +5,6 @@ function processNumbers( arr ) {
             increasedNumbersArray.push(arr[i])
         }
     }
-    console.log(increasedNumbersArray);
     return increasedNumbersArray.length
 }
 
