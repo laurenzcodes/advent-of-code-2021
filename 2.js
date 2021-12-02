@@ -1,10 +1,10 @@
 // Part 1
-function computeLocation(step) {
+function computeLocation(steps) {
     let posX = 0;
     let posY = 0;
-    for ( let i = 0; i < step.length; i++ ) {
-        const command = step[i].split(' ')[0];
-        const amount = parseInt(step[i].split(' ')[1]);
+    for ( const step in steps ) {
+        const command = steps[step].split(' ')[0];
+        const amount = parseInt(steps[step].split(' ')[1]);
         switch (command) {
             case 'forward':
                 posX += amount;
@@ -20,13 +20,13 @@ function computeLocation(step) {
 }
 
 // Part 2
-function computeLocationAccurate(step) {
+function computeLocationAccurate(steps) {
     let posX = 0;
     let posY = 0;
     let aim = 0;
-    for ( let i = 0; i < step.length; i++ ) {
-        const command = step[i].split(' ')[0];
-        const amount = parseInt(step[i].split(' ')[1]);
+    for ( const step in steps ) {
+        const command = steps[step].split(' ')[0];
+        const amount = parseInt(steps[step].split(' ')[1]);
         switch (command) {
             case 'forward':
                 posX += amount;
