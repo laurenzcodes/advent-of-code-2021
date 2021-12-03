@@ -44,6 +44,76 @@ function computeGammaEpsilon(bits) {
   return gammaEpsilon;
 }
 
+// Part 2
+function computeRatings(bits) {
+  const rowLength = bits[0].toString().length;
+  let oxygenRatings = bits;
+  let scrubberRatings = bits;
+
+  // Compute oxygen rating
+  for (i = 0; i <= rowLength; i++) {
+    let ones = 0;
+    let zeros = 0;
+
+    // Count zero and one occurences at each position
+    for (row in oxygenRatings) {
+      const hasOne = oxygenRatings[row].charAt(i) === "1";
+      const hasZero = oxygenRatings[row].charAt(i) === "0";
+      if (hasOne) {
+        ones++;
+      } else if (hasZero) {
+        zeros++;
+      }
+    }
+
+    // Filter oxygen rating array depending on frequency
+    if (oxygenRatings.length > 1) {
+      if (ones > zeros || ones === zeros) {
+        oxygenRatings = oxygenRatings.filter((row) => row.charAt(i) === "1");
+      } else if (ones < zeros) {
+        oxygenRatings = oxygenRatings.filter((row) => row.charAt(i) === "0");
+      }
+    }
+  }
+
+  // Compute scrubber rating
+  for (i = 0; i <= rowLength; i++) {
+    let ones = 0;
+    let zeros = 0;
+    for (row in scrubberRatings) {
+      const hasOne = scrubberRatings[row].charAt(i) === "1";
+      const hasZero = scrubberRatings[row].charAt(i) === "0";
+      if (hasOne) {
+        ones++;
+      } else if (hasZero) {
+        zeros++;
+      }
+    }
+    if (scrubberRatings.length > 1) {
+      if (ones > zeros || ones === zeros) {
+        scrubberRatings = scrubberRatings.filter(
+          (row) => row.charAt(i) === "0"
+        );
+      } else if (ones < zeros) {
+        scrubberRatings = scrubberRatings.filter(
+          (row) => row.charAt(i) === "1"
+        );
+      }
+    }
+  }
+
+  return (
+    "oxygenRatings: " +
+    parseInt(oxygenRatings[0], 2) +
+    "<br />" +
+    "scrubberRatings: " +
+    parseInt(scrubberRatings[0], 2) +
+    "<br />" +
+    "life support rating: " +
+    parseInt(oxygenRatings[0], 2) * parseInt(scrubberRatings[0], 2)
+  );
+}
+
 // Get values from DOM and output result
 $(document).ready(function () {
   $("#input-day3").on("input", function () {
@@ -52,6 +122,6 @@ $(document).ready(function () {
 
     $("#output-day3-1").text(computeGammaEpsilon(inputArray));
 
-    $("#output-day3-2").text(computeLocationAccurate(inputArray));
+    $("#output-day3-2").html(computeRatings(inputArray));
   });
 });
