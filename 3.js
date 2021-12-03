@@ -16,6 +16,7 @@ function computeGammaEpsilon(bits) {
   let pos11 = [];
   let pos12 = [];
 
+  // Loop through rows and push each bit into position array depending on position in row
   for (bit in bits) {
     const rowArray = bits[bit].split("");
     for (number in rowArray) {
@@ -23,23 +24,23 @@ function computeGammaEpsilon(bits) {
     }
   }
 
+  // Loop through 12 positions and filter by occurence
+  // to push into epsilon and gamma arrays depending on frequency
   for (i = 1; i <= 12; i++) {
-    console.log(eval(`pos${i}`));
     const oneOccurences = eval(`pos${i}`).filter(
       (x) => parseInt(x) === 1
     ).length;
     const zeroOccurences = eval(`pos${i}`).filter(
       (x) => parseInt(x) === 0
     ).length;
-    console.log(oneOccurences, zeroOccurences);
+
     gamma.push(oneOccurences > zeroOccurences ? "1" : "0");
     epsilon.push(oneOccurences < zeroOccurences ? "1" : "0");
   }
-
+  // Convert binary to decimal
   const gammaEpsilon =
     parseInt(epsilon.join(""), 2) * parseInt(gamma.join(""), 2);
 
-  console.log(epsilon.join(""), gamma.join(""));
   return gammaEpsilon;
 }
 
